@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { GetAllCoins } from '../../services/awesomeApiCoins'
 import { Link } from 'react-router-dom';
+import MoneyIcon from '../../components/moneyIcon';
+import './styles.css';
 
-function Home() {
+export default function Home() {
   const [coins, setCoins] = useState()
 
   useEffect(() => {
@@ -16,21 +18,19 @@ function Home() {
     return <div>loading</div>
   }
 
-  console.log('chegou aqui:', coins);
-
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row' }}>
+    <div className='moneyList'>
       {coins.map(coin =>
-        <div
-          style={{ textAlign: "center", width: 100, height: 100, padding: 10, border: '10px solid black', margin: 10 }}
+        <Link 
+          className='moneylink'
+          to={'coin/' + coin.code}
           key={coin.code + coin.codein}>
-          Hoje o <b>{coin.name}</b> vale <b>{coin.ask}</b> reais
-          <br></br>
-          <Link to={'coin/' + coin.code}>Open</Link>
-        </div>
+            <MoneyIcon></MoneyIcon>
+            <b>{coin.name}</b> 
+            <br></br>
+            {coin.code} 1,00 => {Number(coin.ask).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}
+        </Link>
       )}
     </div>
   )
 }
-
-export default Home;

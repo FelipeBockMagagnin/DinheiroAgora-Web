@@ -1,0 +1,24 @@
+.navbar{
+  width: 100%;
+  background-color: blue;
+}
+
+.navbarList{
+  display: inline-block;
+}
+
+.navbarList li{
+  display: inline-block;
+  margin-right: 30px;
+  color: black;
+  font-size: 20px;
+}
+
+.navbarList li a{
+  color: black;  
+  text-decoration: none;
+}
+
+.navbarList li a:hover{
+  color: white;  
+}
