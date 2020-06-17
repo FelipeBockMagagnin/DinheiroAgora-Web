@@ -28,7 +28,7 @@ export default function Home() {
             <MoneyIcon></MoneyIcon>
             <b>{coin.name}</b> 
             <br></br>
-            {coin.code} 1,00 => {Number(coin.ask).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}
+            {coin.code} 1,00 => {Number(coin.bid).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}
         </Link>
       )}
     </div>

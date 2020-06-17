@@ -6,8 +6,12 @@ import axios from 'axios'
 const baseUrl = 'https://economia.awesomeapi.com.br/json'
 
 function GetAllCoins(){
-  return axios.get(baseUrl + "/all");
+  return axios.get(baseUrl + "/all")
+}
+
+function GetCoinHistory(coinID, quantity){
+  return axios.get(baseUrl + `/${coinID}/${quantity}`)
 }
 
 
-export { GetAllCoins }
+export { GetAllCoins, GetCoinHistory }
