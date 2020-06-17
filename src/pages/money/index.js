@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'
 import { GetCoinHistory } from '../../services/awesomeApiCoins'
-import { TimestapToDate, TimestapToNumber } from '../../utils/utils'
+import { TimestapToDate } from '../../utils/utils'
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from 'recharts';
@@ -39,6 +39,7 @@ function MyChart(coinHistory) {
   var minValue = coinHistory[1].bid;
   console.log(minValue);
 
+  // eslint-disable-next-line array-callback-return
   coinHistory.map(data => {
     try{
       if(data.bid > maxValue){
