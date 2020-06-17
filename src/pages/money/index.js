@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'
 import { GetCoinHistory } from '../../services/awesomeApiCoins'
 import { TimestapToDate, TimestapToNumber } from '../../utils/utils'
-import { Chart } from 'react-charts'
+import {
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+} from 'recharts';
 
 export default function Money() {
   const { coinID } = useParams();
@@ -32,42 +34,37 @@ export default function Money() {
 }
 
 function MyChart(coinHistory) {
-  var bidPrices = [[]];
+  var bidPrices = [{}];
+  var maxValue = 0;
+  var minValue = coinHistory[1].bid;
+  console.log(minValue);
 
   coinHistory.map(data => {
     try{
-      bidPrices.push([(data.timestamp/1000), data.bid])
+      if(data.bid > maxValue){
+        maxValue = data.bid;
+      }
+
+      if(data.bid < minValue){
+        minValue = data.bid;
+      }
+
+      bidPrices.push({data:(TimestapToDate(data.timestamp)), valor: data.bid})
     } catch {
 
     }
   })
 
-  console.log(bidPrices)
-
-  const data = [
-      {
-        label: 'Series 1',
-        data: bidPrices
-      }
-    ]
-
-  const axes = [
-      { primary: true, type: 'linear', position: 'bottom' },
-      { type: 'linear', position: 'left' }
-    ]
-
   const lineChart = (
-    // A react-chart hyper-responsively and continuously fills the available
-    // space of its parent element automatically
-    <div
-      style={{
-        width: '1000px',
-        height: '300px'
-      }}
-    >
-      <Chart data={data} axes={axes} primaryCursor
-          secondaryCursor />
-    </div>
+    <LineChart width={800} height={400} data={bidPrices}
+            margin={{top: 50, right: 30, left: 20, bottom: 5}}>
+       <XAxis dataKey="data"/>
+       <YAxis type="number" domain={[minValue, maxValue ]}/>
+       <CartesianGrid strokeDasharray="3 3"/>
+       <Tooltip/>
+       <Legend />
+       <Line type="monotone" dataKey="valor" stroke="#82ca9d" />
+      </LineChart>
   )
 
   return lineChart;
